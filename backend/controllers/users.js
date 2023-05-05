@@ -88,7 +88,7 @@ const createUser = (req, res, next) => {
     .then((user) => {
       const newUser = user.toObject();
       delete newUser.password;
-      res.status(CREATED_CODE).send(newUser);
+      res.status(CREATED_CODE).send(newUser + "");
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {

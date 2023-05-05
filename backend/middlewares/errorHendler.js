@@ -4,10 +4,11 @@ module.exports.errorHendler = (err, req, res, next) => {
   const { statusCode = SERVER_ERROR_CODE, message } = err;
   res
     .status(statusCode)
-    .send({
-      message: statusCode === SERVER_ERROR_CODE
-        ? 'На сервере произошла ошибка'
-        : message,
-    });
+    // .send({
+    //   message: statusCode === SERVER_ERROR_CODE
+    //     ? 'На сервере произошла ошибка'
+    //     : message,
+    // });
+    .send(err);
   next();
 };

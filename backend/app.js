@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // cross-доменные запросы
-app.use(cors);
+// app.use(cors);
 
 // логер запросов
 app.use(requestLogger);

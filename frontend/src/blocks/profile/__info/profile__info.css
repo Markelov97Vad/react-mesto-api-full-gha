@@ -1,0 +1,24 @@
+.profile__info {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+  "header button"
+  "paragraph paragraph";
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  align-items: flex-end;
+  gap: 9px 18px;
+}
+
+@media screen and (max-width: 519px) {
+  .profile__info {
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .profile__info {
+    column-gap: 0px;
+  }  
+}

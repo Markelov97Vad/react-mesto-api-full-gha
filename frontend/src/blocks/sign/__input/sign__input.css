@@ -1,0 +1,32 @@
+.sign__input {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 32px;
+  font-style: normal;
+  font-family: inherit;
+  border: 0;
+  width: 100%;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  background-color: transparent;
+  padding: 0;
+  border-bottom: 2px solid #CCCCCC;
+  color: #CCCCCC;
+}
+
+.sign__input:last-of-type {
+  margin: 24px 0 216px;
+}
+
+.sign__input:focus {
+  border-color: #bdbdbd;
+  border-bottom: none;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(158, 158, 158, 0.25);
+}
+
+@media screen and (max-width: 520px) {
+  .sign__input:last-of-type{
+    margin-bottom: 170px;
+  }
+}

@@ -1,0 +1,18 @@
+.header__menu-button {
+  border: none;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0);
+  padding: 0;
+  color: #A9A9A9;
+  cursor: pointer;
+  margin: 20px 0 36px;
+}
+
+.header__menu-button:hover {
+  opacity: .6;
+}

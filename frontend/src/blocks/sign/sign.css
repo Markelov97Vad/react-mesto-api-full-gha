@@ -1,0 +1,16 @@
+.sign {
+  display: flex;
+  color: white;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 62px auto 80px;
+  max-width: 358px;
+  width: calc(100% - 2 * 30px);
+}
+
+@media screen and (max-width: 520px) {
+  .sign {
+    margin-top: 42px;
+  }
+}

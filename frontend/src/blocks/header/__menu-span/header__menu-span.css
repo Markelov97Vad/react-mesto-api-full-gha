@@ -1,0 +1,15 @@
+.header__menu-span {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  color: #FFFFFF;
+  margin-top: 35px;
+}
+
+@media screen and (max-width: 520px) {
+  .header__menu-span {
+    margin-top: 40px;
+  }
+}

@@ -1,0 +1,17 @@
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+@media screen and (max-width: 880px){
+  .header__nav {
+    margin-right: 27px;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .header__nav_close {
+    display: none;
+  }
+}

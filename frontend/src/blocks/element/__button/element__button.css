@@ -1,0 +1,19 @@
+.element__button {
+  background: url(../../../images/heart.svg) no-repeat;
+  width: 22px;
+  height: 19px;
+  border: 0;
+  padding: 0;
+  transition: .2s ease-in;
+  cursor: pointer;
+  margin-bottom: 3px;
+  
+}
+
+.element__button:hover {
+  opacity: 0.5;
+}
+
+.element__button:active {
+  background: url(../../../images/heart-active.svg);
+}

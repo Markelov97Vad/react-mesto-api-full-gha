@@ -1,0 +1,12 @@
+.content__elements {
+  margin: 0 auto 67px;
+}
+
+@media screen and (max-width: 920px) {
+  .content__elements {
+    margin-left: 19px;
+    margin-right: 19px;
+    margin-bottom: 53px;
+
+  }
+}

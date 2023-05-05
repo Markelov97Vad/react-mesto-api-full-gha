@@ -1,0 +1,22 @@
+.header__button-burger {
+  display: none;
+}
+
+@media screen and (max-width: 680px) {
+  .header__button-burger {
+    display: block;
+    background-repeat: no-repeat;
+    background-size: 24px 18px;
+    background-color: inherit;
+    width: 24px;
+    height: 18px;
+    border: none;
+    margin: 0 30px 31px 0;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .header__button-burger:hover {
+    opacity: .6;
+  }
+}

@@ -1,0 +1,6 @@
+.root__header {
+  margin: 0 auto 41.25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

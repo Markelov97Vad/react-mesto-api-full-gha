@@ -16,11 +16,11 @@ mongoose.connect(DATABASE_URL, {
   useNewUrlParser: true,
 });
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
 // cross-доменные запросы
 app.use(cors);
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // логер запросов
 app.use(requestLogger);

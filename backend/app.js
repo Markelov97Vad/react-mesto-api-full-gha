@@ -14,14 +14,14 @@ const app = express();
 
 mongoose.connect(DATABASE_URL, {
   useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
-
-// cross-доменные запросы
-app.use(cors);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// cross-доменные запросы
+app.use(cors);
 // логер запросов
 app.use(requestLogger);
 

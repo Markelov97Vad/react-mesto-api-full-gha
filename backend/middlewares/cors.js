@@ -15,6 +15,7 @@ module.exports.cors = (req, res, next) => {
     // res.header('Access-Control-Allow-Origin', origin);
     res.header('Access-Control-Allow-Origin', '*');
   }
+  res.header('Access-Control-Allow-Origin', '*');
   // обработка предварительных запросов CORS
   if (method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);

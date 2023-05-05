@@ -11,6 +11,13 @@ const { cors } = require('./middlewares/cors');
 const productionJwtCheck = require('./utils/productionJwtCheck');
 
 const app = express();
+// const connectionDataBase = () => {
+//   mongoose.connect(DATABASE_URL, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   });
+//   return mongoose.connection;
+// };
 
 mongoose.connect(DATABASE_URL, {
   useNewUrlParser: true,

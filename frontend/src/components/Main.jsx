@@ -14,7 +14,10 @@ function Main ({onEditProfile, onAddPlace, onEditAvatar , cards, handleLogin, us
   const navigate = useNavigate();
 
   const signOut = () => {
-    localStorage.removeItem('jwt');
+    console.log('JWT который был в хранилище',localStorage.getItem('jwt'));
+    console.log('\x1b[31m%s\x1b[0m','удаляю JWT из хранилища');
+    localStorage.clear('jwt');
+    console.log(localStorage.getItem('jwt'));
     handleLogin();
     navigate('/sign-in', {replace: true});
   }

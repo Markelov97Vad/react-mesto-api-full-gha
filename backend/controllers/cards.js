@@ -19,19 +19,32 @@ const getCards = (req, res, next) => {
 };
 
 // отправка данных о новой карточке
-const createCard = (req, res, next) => {
+async function createCard(req, res, next) {
   const { name, link } = req.body;
   const owner = req.user._id;
 
-  Card.create({ name, link, owner })
-    .then((card) => res.status(CREATED_CODE).send(card))
-    .catch((err) => {
-      if (err instanceof mongoose.Error.ValidationError) {
-        return next(new BadRequestError('Переданы некорректные данные при создании карточки.'));
-      }
-      return next(err);
-    });
-};
+  // Card.create({ name, link, owner })
+  //   .then((card) => {
+  //     res.status(CREATED_CODE).send(card);
+  //   })
+  //   .catch((err) => {
+  //     if (err instanceof mongoose.Error.ValidationError) {
+  //       return next(new BadRequestError('Переданы некорректные данные при создании карточки.'));
+  //     }
+  //     return next(err);
+  //   });
+  // let newCard;
+  try {
+    const newCard = await Card.create({ name, link, owner });
+    await newCard.populate(['owner', 'likes']);
+    return res.status(CREATED_CODE).send(newCard);
+  } catch (err) {
+    if (err instanceof mongoose.Error.ValidationError) {
+      return next(new BadRequestError('Переданы некорректные данные при создании карточки.'));
+    }
+    return next(err);
+  }
+}
 
 // запрос на удаление карточки
 const deleteCard = (req, res, next) => {
@@ -57,51 +70,111 @@ const deleteCard = (req, res, next) => {
 };
 
 // запрос на добавление пользователя в объект likes выбранной карточки
-const likeCard = (req, res, next) => {
-  const { cardId } = req.params;
-  const { _id } = req.user;
+// const likeCard = (req, res, next) => {
+//   const { cardId } = req.params;
+//   const { _id } = req.user;
 
-  Card.findByIdAndUpdate(
-    cardId,
-    { $addToSet: { likes: _id } }, // добавить _id в массив, если его там нет
-    { new: true },
-  )
-    .then((card) => {
-      if (!card) {
-        throw new NotFoundError(`Передан несуществующий id: ${cardId} карточки.`);
-      }
-      return res.status(OK_CODE).send(card);
-    })
-    .catch((err) => {
-      if (err instanceof mongoose.Error.CastError) {
-        return next(new BadRequestError('Переданы некорректные данные для постановки лайка'));
-      }
-      return next(err);
-    });
-};
+//   Card.findByIdAndUpdate(
+//     cardId,
+//     { $addToSet: { likes: _id } }, // добавить _id в массив, если его там нет
+//     { new: true },
+//   )
+//     .then((card) => {
+//       if (!card) {
+//         throw new NotFoundError(`Передан несуществующий id: ${cardId} карточки.`);
+//       }
+//       // return res.status(OK_CODE).send(card);
+//     })
+//     .catch((err) => {
+//       if (err instanceof mongoose.Error.CastError) {
+//         return next(new BadRequestError('Переданы некорректные данные для постановки лайка'));
+//       }
+//       return next(err);
+//     });
+//   Card.findById(cardId)
+//     .populate(['owner', 'likes'])
+//     .then((card) => res.status(OK_CODE).send(card))
+//     .catch(next);
+// };
+
+async function likeCard(req, res, next) {
+  try {
+    const { cardId } = req.params;
+    const { _id } = req.user;
+    const card = await Card.findByIdAndUpdate(
+      cardId,
+      { $addToSet: { likes: _id } }, // добавить _id в массив, если его там нет
+      { new: true },
+    ).populate(['owner', 'likes']);
+
+    if (!card) {
+      throw new NotFoundError(`Передан несуществующий id: ${cardId} карточки.`);
+    }
+
+    return res.status(OK_CODE).send(card);
+  } catch (err) {
+    if (err instanceof mongoose.Error.CastError) {
+      return next(new BadRequestError('Переданы некорректные данные для постановки лайка'));
+    }
+    return next(err);
+  }
+}
 
 // запрос на удаление пользователя из объекта likes выбранной карточки
-const dislikeCard = (req, res, next) => {
-  const { cardId } = req.params;
-  const { _id } = req.user;
-  Card.findByIdAndUpdate(
-    cardId,
-    { $pull: { likes: _id } }, // убрать _id из массива
-    { new: true },
-  )
-    .then((card) => {
-      if (!card) {
-        throw new NotFoundError(`Передан несуществующий id: ${cardId} карточки.`);
-      }
-      return res.status(OK_CODE).send(card);
-    })
-    .catch((err) => {
-      if (err instanceof mongoose.Error.CastError) {
-        return next(new BadRequestError('Переданы некорректные данные для снятии лайка'));
-      }
-      return next(err);
-    });
-};
+// const dislikeCard = (req, res, next) => {
+//   const { cardId } = req.params;
+//   const { _id } = req.user;
+//   Card.findByIdAndUpdate(
+//     cardId,
+//     { $pull: { likes: _id } }, // убрать _id из массива
+//     { new: true },
+//   )
+//     .then((card) => {
+//       if (!card) {
+//         throw new NotFoundError(`Передан несуществующий id: ${cardId} карточки.`);
+//       }
+//       // return res.status(OK_CODE).send(card);
+//     })
+//     // .findById(cardId)
+//     // .populate(['owner', 'likes'])
+//     // .then((card) => res.status(OK_CODE).send(card))
+//     .catch((err) => {
+//       if (err instanceof mongoose.Error.CastError) {
+//         return next(new BadRequestError('Переданы некорректные данные для снятии лайка'));
+//       }
+//       return next(err);
+//     });
+//   Card.findById(cardId)
+//     // .populate(['owner', 'likes'])
+//     .then((card) => {
+//       console.log(card);
+//       res.status(OK_CODE).send(card);
+//     })
+//     .catch(next);
+// };
+
+async function dislikeCard(req, res, next) {
+  try {
+    const userId = req.user._id;
+    const { cardId } = req.params;
+    const card = await Card.findByIdAndUpdate(
+      cardId,
+      { $pull: { likes: userId } }, // убрать _id из массива, если он есть
+      { new: true },
+    ).populate(['owner', 'likes']);
+
+    if (!card) {
+      throw new NotFoundError(`Передан несуществующий id: ${cardId} карточки.`);
+    }
+
+    return res.status(OK_CODE).send(card);
+  } catch (err) {
+    if (err.name === 'CastError' || err.name === 'ValidationError') {
+      return next(new BadRequestError('Переданы некорректные данные для снятии лайка'));
+    }
+    return next(err);
+  }
+}
 
 module.exports = {
   getCards,

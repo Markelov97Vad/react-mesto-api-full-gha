@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "../hooks/useForm";
 import PopupWithForm from "./PopupWithForm";
 
-function AddPlacePopup ({isOpen, onClose, onAddPlace, onLoading}) {
+function AddPlacePopup ({isOpen, onClose, onAddCard, onLoading}) {
   
   const {values, handleChange, setValues} = useForm({});
 
   function handleSubmit (event) {
     event.preventDefault();
-    onAddPlace({
+    onAddCard({
       name: values.name,
       link: values.link 
     })

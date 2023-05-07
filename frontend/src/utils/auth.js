@@ -1,7 +1,5 @@
-import { BASE_URL } from "./config";
-
 class Auth {
-  constructor({ url, headers }) {
+  constructor({url, headers}) {
     this._url = url;
     this._headers = headers;
   }
@@ -10,7 +8,7 @@ class Auth {
     if (response.ok) {
       return response.json()
     } else {
-      return Promise.reject(`${ response.status } - ${ response.statusText }`)
+      return Promise.reject(`${response.status} - ${response.statusText}`)
     }  
   }
   /**
@@ -23,11 +21,11 @@ class Auth {
    * Error
    * 400 - некорректно заполнено одно из полей
    */
-  register({ password, email }) {
-    return fetch(`${ this._url }/signup`, {
+  register({password, email}) {
+    return fetch(`${this._url}/signup`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify({ password, email })
+      body: JSON.stringify({password, email})
     })
     .then( response =>  this._checkResponse(response))
   }
@@ -41,11 +39,11 @@ class Auth {
    * 400 - некорректно заполнено одно из полей
    * 401 - пользователь с email не найден
    */
-  authorize({ password, email }) {
-    return fetch(`${ this._url }/signin`, {
+  authorize({password, email}) {
+    return fetch(`${this._url}/signin`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify({ password, email })
+      body: JSON.stringify({password, email})
     })
     .then(response => this._checkResponse(response))
   }
@@ -61,11 +59,11 @@ class Auth {
    * 401 — Переданный токен некорректен
    */
   checkTocken(token) {
-    return fetch(`${ this._url }/users/me`, {
+    return fetch(`${this._url}/users/me`, {
       method: 'GET',
       headers: {
         ...this._headers,
-        "Authorization" : `Bearer ${ token }`
+        "Authorization" : `Bearer ${token}`
       }
     })
     .then(response => this._checkResponse(response))
@@ -73,7 +71,7 @@ class Auth {
 }
 
 const auth = new Auth ({
-  url: BASE_URL,
+  url: 'http://localhost:3000',
   headers: {
     'Content-Type': 'application/json'
   }

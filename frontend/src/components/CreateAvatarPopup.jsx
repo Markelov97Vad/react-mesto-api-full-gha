@@ -7,6 +7,7 @@ function CreateAvatarPopup ({ onUpdateAvatar, ...props}) {
   
   function handleSubmit (event) {
     event.preventDefault();
+    
     onUpdateAvatar({
       avatar: avatarRef.current.value
     })

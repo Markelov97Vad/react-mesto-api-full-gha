@@ -1,5 +1,3 @@
-import { BASE_URL } from "./config";
-
 class Api {
   constructor({url, headers}) {
     this._url = url;
@@ -17,22 +15,21 @@ class Api {
     return fetch(url, options).then(res =>this._getPromise(res))
   }
 
-  getCards () {
-    return this._request(`${this._url}/cards`, {
-      headers: this._headers
-    })
-  }
-
   getUserInfo () {
     return this._request(`${this._url}/users/me`, {
-      headers: this._headers
+      headers: this._headers,
     })
   }
 
-  setUserInfo(data) {
+  setUserInfo(data, validJwt) {
+    console.log(data);
+    console.log(localStorage.getItem('jwt'));
     return this._request(`${this._url}/users/me`, {
       method: 'PATCH',
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        "Authorization": `Bearer ${validJwt}`,
+      },
       body: JSON.stringify({
         name: data.name,
         about: data.about
@@ -40,10 +37,32 @@ class Api {
     })
   }
 
-  addCard(data) {
+  setUserAvatar(data, validJwt) {
+    return this._request(`${this._url}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: {
+        ...this._headers,
+        "Authorization": `Bearer ${validJwt}`,
+      },
+      body: JSON.stringify({
+        avatar: data.avatar
+      })
+    })
+  }
+
+  getCards () {
+    return this._request(`${this._url}/cards`, {
+      headers: this._headers
+    })
+  }
+
+  addCard(data, validJwt) {
     return this._request(`${this._url}/cards`, {
       method: 'POST',
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        "Authorization": `Bearer ${validJwt}`,
+      },
       body: JSON.stringify({
         name: data.name,
         link: data.link
@@ -51,38 +70,33 @@ class Api {
     })
   }
 
-  deleteCard(cardId) {
+  deleteCard(cardId, validJwt) {
     return this._request(`${this._url}/cards/${cardId}`, {
       method: 'DELETE',
-      headers: this._headers
+      headers: {
+        ...this._headers,
+        "Authorization": `Bearer ${validJwt}`,
+      }
     })
   }
   
-  changeLikeCardStatus(cardId, isLiked) { 
+  changeLikeCardStatus(cardId, isLiked, validJwt) { 
     return this._request(`${this._url}/cards/${cardId}/likes`,{
       method: `${ isLiked ? 'PUT' : 'DELETE'}`,
-      headers: this._headers
+      headers: {
+        ...this._headers,
+        "Authorization": `Bearer ${validJwt}`,
+      },
     })
   }
-
-  setUserAvatar(data) {
-    return this._request(`${this._url}/users/me/avatar`, {
-      method: 'PATCH',
-      headers: this._headers,
-      body: JSON.stringify({
-        avatar: data.avatar
-      })
-    })
-  }
-
 }
 const api = new Api ({
-  url: BASE_URL,
+  url: 'http://localhost:3000',
   headers: {
-    authorization: `Bearer ${localStorage.getItem('jwt')}`,
+    "Authorization": `Bearer ${localStorage.getItem('jwt')}`,
     "Content-Type": "application/json",
   }
-});
+}, console.log('из Api' ,localStorage.getItem('jwt')));
 
 
 export default api

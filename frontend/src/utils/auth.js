@@ -1,3 +1,5 @@
+import BASE_URL from "./config";
+
 class Auth {
   constructor({url, headers}) {
     this._url = url;
@@ -13,13 +15,17 @@ class Auth {
   }
   /**
    * Response
-   * } 
-      "data": {
-        "_id": "5f5204c577488bcaa8b7bdf2",,
-        "email": "email@yandex.ru"
+   * 
+    {
+      "name": "Жак-Ив Кусто",
+      "about": "Исследователь",
+      "avatar": "https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png",
+      "email": "email@yandex.ru",
+      "_id": "64588b2cfeec5dbbe75e9a20"
     }
    * Error
    * 400 - некорректно заполнено одно из полей
+   * 409 - При регистрации указан email@yandex.ru, который уже существует на сервере
    */
   register({password, email}) {
     return fetch(`${this._url}/signup`, {
@@ -37,7 +43,7 @@ class Auth {
    * 
    * Error 
    * 400 - некорректно заполнено одно из полей
-   * 401 - пользователь с email не найден
+   * 401 - Неправильные почта или пароль
    */
   authorize({password, email}) {
     return fetch(`${this._url}/signin`, {
@@ -49,10 +55,14 @@ class Auth {
   }
   /**
    * Response
-   *{
-      "_id":"1f525cf06e02630312f3fed7",
-      "email":"email@email.ru"
-    } 
+   *
+    {
+      "name": "Жак-Ив Кусто",
+      "about": "Исследователь",
+      "avatar": "https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png",
+      "email": "email@yandex.ru",
+      "_id": "64588b2cfeec5dbbe75e9a20"
+    }
    * 
    * Error 
    * 400 — Токен не передан или передан не в том формате
@@ -71,7 +81,7 @@ class Auth {
 }
 
 const auth = new Auth ({
-  url: 'http://localhost:3000',
+  url: BASE_URL,
   headers: {
     'Content-Type': 'application/json'
   }

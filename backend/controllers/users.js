@@ -57,6 +57,7 @@ const getUserById = (req, res, next) => {
 // запрос текущего пользователя
 const getCurrentUser = (req, res, next) => {
   const { _id } = req.user;
+
   User.findById(_id)
     .then((user) => {
       if (!user) {

@@ -8,7 +8,6 @@ function Card ({card, onCardClick, onCardLike, onCardDelete}) {
   const isLiked = card.likes.some(elId => elId._id === currentUser._id);
   const cardLikeButtonClassname = `element__button ${isLiked ? 'element__button_active' : ''}`
   
-
   const handleClick = () => {
     onCardClick(card);
   }
@@ -23,7 +22,9 @@ function Card ({card, onCardClick, onCardLike, onCardDelete}) {
 
   return (
     <article className="element">
-      {isOwn && <button className="element__delete-button" type="button" onClick={handleDelete} aria-label="delete card"></button>}
+      {isOwn &&
+        <svg className="element__delete-button" type="button" onClick={handleDelete} aria-label="delete card"></svg>
+      }
       <img src={card.link} alt={card.name} className="element__image" onClick={handleClick}/>
       <div className="element__info">
         <h2 className="element__title">{card.name}</h2>

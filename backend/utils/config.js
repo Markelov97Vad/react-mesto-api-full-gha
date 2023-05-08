@@ -1,5 +1,4 @@
 const { PORT = 3000, DATABASE_URL = 'mongodb://127.0.0.1:27017/mestodb' } = process.env;
-
 // JWT для разработки
 const JWT_SECRET_DEV = 'some-secret-key';
 // ID для разработки

@@ -1,3 +1,5 @@
+import BASE_URL from "./config";
+
 class Api {
   constructor({url, headers}) {
     this._url = url;
@@ -22,8 +24,6 @@ class Api {
   }
 
   setUserInfo(data, validJwt) {
-    console.log(data);
-    console.log(localStorage.getItem('jwt'));
     return this._request(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: {
@@ -90,13 +90,13 @@ class Api {
     })
   }
 }
+
 const api = new Api ({
-  url: 'http://localhost:3000',
+  url: BASE_URL,
   headers: {
     "Authorization": `Bearer ${localStorage.getItem('jwt')}`,
     "Content-Type": "application/json",
   }
-}, console.log('из Api' ,localStorage.getItem('jwt')));
-
+});
 
 export default api

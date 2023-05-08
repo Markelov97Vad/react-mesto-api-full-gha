@@ -10,6 +10,6 @@
 
 IP-адрес 158.160.46.55 
 
-Frontend https://...
+Frontend https://mesto.marsello.nomoredomains.monster
 
-Backend https://...
+Backend https://api.mesto.marsello.nomoredomains.monster

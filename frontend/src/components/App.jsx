@@ -17,23 +17,29 @@ import api from '../utils/Api';
 import auth from '../utils/auth';
 
 function App() {
+  // состояние попапов
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false)
   const [isEditProfilePopupOpen , setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isPopupWithConfirmation, setIsPopupWithConfirmation] = useState(false);
-  const [removeCardId ,setRemoveCardId] = useState('')
-  const [selectedCard, setSelectedCard] = useState({});
-  const [currentUser, setCurrentUser] = useState({});
-  const [cards, setCards] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [infoTooltipOpen, setInfoTooltipOpen] = useState(false);
+  // состояние логина
   const [loggetIn, setLoggetIn] = useState(false);
-  const [userEmail, setUserEmail] = useState('');
-  // const [registrationValue, setRegistrationValue] = useState(false);
-  // const [authorizeValue, setAuthorizeValue] = useState(false);
+  // состояние лоадера
+  const [isLoading, setIsLoading] = useState(false);
   // состояние результата регистрации и авторизации
   const [isResultSucces, setIsResultSucces] = useState(false);
-  const [infoTooltipOpen, setInfoTooltipOpen] = useState(false);
+  // id удаляемой карточки
+  const [removeCardId ,setRemoveCardId] = useState('')
+  const [selectedCard, setSelectedCard] = useState({});
+  // текущий пользователь
+  const [currentUser, setCurrentUser] = useState({});
+  // массив карточек
+  const [cards, setCards] = useState([]);
+  // текущий email
+  const [userEmail, setUserEmail] = useState('');
+  // текст
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
@@ -46,7 +52,7 @@ function App() {
         })
         .catch( err => console.log(err))
       }
-    }, [loggetIn])
+    }, [loggetIn]);
 
   const handleRegistration = (password, email) => {
     return auth.register(password, email)
@@ -61,7 +67,7 @@ function App() {
       console.log(err)
     })
     .finally(() => setInfoTooltipOpen(true))
-  }
+  };
 
   const handleAuthorize = (password, email) => {
     return auth.authorize(password, email)
@@ -80,7 +86,11 @@ function App() {
         setMessage('Неверный логин или пароль');
       })
       .finally(() => setInfoTooltipOpen(true))
-  }
+  };
+
+  const handleLogin = () => {
+    setLoggetIn(!loggetIn);
+  };
 
   const handleTokenCheck = () => {
     if (localStorage.getItem('jwt')){
@@ -96,32 +106,35 @@ function App() {
         })
         .catch(err => console.log(err))
     }
-  }
+  };
 
   useEffect(() => {
-    handleTokenCheck();
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      handleTokenCheck();
+    }
   },[loggetIn]);
 
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
-  }
+  };
 
   const handleAddPlaceClick = () => {
     setIsAddPlacePopupOpen(!isAddPlacePopupOpen)
-  }
+  };
 
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
-  }
+  };
 
   const handlePopupWithConfirmationClick = (cardId) => {
     setIsPopupWithConfirmation(!isPopupWithConfirmation);
     setRemoveCardId(cardId);
-  }
+  };
 
   const handleImagePopupOpen = () => {
     setIsImagePopupOpen(!isImagePopupOpen)
-  }
+  };
 
   const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false);
@@ -130,12 +143,12 @@ function App() {
     setSelectedCard({});
     setIsPopupWithConfirmation(false);
     setInfoTooltipOpen(false)
-  }
+  };
 
   const handleCardClick = (card) => {
     setIsImagePopupOpen(!isImagePopupOpen)
     setSelectedCard(card);
-  }
+  };
 
   function handleCardLike (card) {
     const isLiked = card.likes.some( el => el._id === currentUser._id);
@@ -149,7 +162,7 @@ function App() {
         });
       })
       .catch( err => console.log(err))
-   }
+   };
 
   function handleCardDelete (id) {
     const validJwt = localStorage.getItem('jwt');
@@ -163,20 +176,19 @@ function App() {
       })
       .catch( err => console.log(err))
       .finally(() => setIsLoading(false))
-   }
+   };
 
   function handleUpdateUser (userData) {
     const validJwt = localStorage.getItem('jwt');
     setIsLoading(true);
     api.setUserInfo(userData, validJwt)
       .then((data) => {
-        console.log(data);
         setCurrentUser(data);
         closeAllPopups();
       })
       .catch(err => console.log(err))
       .finally(() => setIsLoading(false))
-  }
+  };
 
   function handleUpdateAvatar (userData) {
     const validJwt = localStorage.getItem('jwt');
@@ -188,7 +200,7 @@ function App() {
       })
       .catch(err => console.log(err))
       .finally(() => setIsLoading(false))
-  }
+  };
 
   function handleAddCard (dataCards) {
     const validJwt = localStorage.getItem('jwt');
@@ -200,11 +212,7 @@ function App() {
       })
       .catch(err => console.log(err))
       .finally(() => setIsLoading(false))
-  }
-
-  const handleLogin = () => {
-    setLoggetIn(!loggetIn)
-  }
+  };
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -236,6 +244,6 @@ function App() {
       </div>
     </CurrentUserContext.Provider>
   );
-}
+};
 
 export default App;

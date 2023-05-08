@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from '../hooks/useForm';
 import Header from './Header';
 
 function Login ({onLogin}) {
-
-  const {values, handleChange} = useForm({})
+  const { values, handleChange } = useForm({})
 
   const handlSubmit = (event) => {
     event.preventDefault();
-    const {email, password} = values
+    const { email, password } = values
 
     if (!email || !password) {
       return
     }
-    onLogin({password, email});
+    onLogin({ password, email });
   }
 
   return (

@@ -6,18 +6,13 @@ import Header from "./Header";
 import burgerMenu from '../images/icon-burger.svg'
 import close from '../images/icon-close.svg'
 
-
 function Main ({onEditProfile, onAddPlace, onEditAvatar , cards, handleLogin, userEmail, ...props}) {
-
   const currentUser = useContext(CurrentUserContext);
   const [menuIsOpen, setMenuIsOpen] = useState(true);
   const navigate = useNavigate();
 
   const signOut = () => {
-    console.log('JWT который был в хранилище',localStorage.getItem('jwt'));
-    console.log('\x1b[31m%s\x1b[0m','удаляю JWT из хранилища');
-    localStorage.clear('jwt');
-    console.log(localStorage.getItem('jwt'));
+    localStorage.removeItem('jwt');
     handleLogin();
     navigate('/sign-in', {replace: true});
   }

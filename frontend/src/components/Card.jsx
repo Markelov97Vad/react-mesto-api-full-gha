@@ -23,7 +23,7 @@ function Card ({card, onCardClick, onCardLike, onCardDelete}) {
   return (
     <article className="element">
       {isOwn &&
-        <svg className="element__delete-button" type="button" onClick={handleDelete} aria-label="delete card"></svg>
+        <button className="element__delete-button" type="button" onClick={handleDelete} aria-label="delete card"></button>
       }
       <img src={card.link} alt={card.name} className="element__image" onClick={handleClick}/>
       <div className="element__info">

@@ -27,7 +27,7 @@ function Login ({onLogin}) {
         <form className="sign__form" onSubmit={handlSubmit}>
           <input className='sign__input' autoComplete="new-email" type="email" name='email' value={values.email || ''} onChange={handleChange} required placeholder='Email'/>
           <input className='sign__input' autoComplete="new-password" type="password" name='password' value={values.password || ''} onChange={handleChange} required placeholder='Пароль'/>
-          <button className='sign__button'  type="submit">Войти</button>
+          <button className='sign__button' type="submit">Войти</button>
         </form>
       </div>
     </>  

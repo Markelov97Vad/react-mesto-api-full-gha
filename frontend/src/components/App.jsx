@@ -43,17 +43,6 @@ function App() {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   if (loggetIn) {
-  //     const validJwt = localStorage.getItem('jwt');
-  //     Promise.all([api.getUserInfo(validJwt), api.getCards(validJwt)])
-  //       .then(( [userInfo, dataCards] )=> {
-  //         setCurrentUser(userInfo);
-  //         setCards(dataCards);
-  //       })
-  //       .catch( err => console.log(err))
-  //     }
-  //   }, [loggetIn]);
   useEffect(() => {
     if (loggetIn) {
       const validJwt = localStorage.getItem('jwt');

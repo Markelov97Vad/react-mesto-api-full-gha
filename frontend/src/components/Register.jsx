@@ -25,7 +25,7 @@ function Register ({onRegister}) {
         <form onSubmit={handleSubmit} className="sign__form">
           <input className='sign__input' autoComplete="new-email" type="email" name='email' value={values.email || ''} onChange={handleChange} required placeholder='Email'/>
           <input className='sign__input' autoComplete="new-password" type="password" name='password' value={values.password || ''} onChange={handleChange} required placeholder='Пароль'/>
-          <button className='sign__button'  type="submit">Зарегистрироваться</button>
+          <button className='sign__button' type="submit">Зарегистрироваться</button>
           <p className='sign__subtitle'>Уже зарегистрированы? <Link className="sign__link" to="/sign-in">Войти</Link></p>
         </form>
       </div>

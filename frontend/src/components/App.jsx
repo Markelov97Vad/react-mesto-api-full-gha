@@ -45,7 +45,8 @@ function App() {
 
   useEffect(() => {
     if (loggetIn) {
-      Promise.all([api.getUserInfo(), api.getCards()])
+      const validJwt = localStorage.getItem('jwt');
+      Promise.all([api.getUserInfo(validJwt), api.getCards(validJwt)])
         .then(( [userInfo, dataCards] )=> {
           setCurrentUser(userInfo);
           setCards(dataCards);
@@ -74,7 +75,7 @@ function App() {
       .then( data => {
         if (data.token) {
           setIsResultSucces(true)
-          setMessage('Вы успешно авторизовались');
+          setMessage('Вы успешно авторизовались!');
           localStorage.setItem('jwt', data.token);
           setLoggetIn(true);
           navigate('/');
@@ -83,7 +84,7 @@ function App() {
       .catch( err => {
         console.log(err)
         setIsResultSucces(false)
-        setMessage('Неверный логин или пароль');
+        setMessage('Неверный логин или пароль.');
       })
       .finally(() => setInfoTooltipOpen(true))
   };

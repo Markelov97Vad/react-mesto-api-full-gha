@@ -17,9 +17,12 @@ class Api {
     return fetch(url, options).then(res =>this._getPromise(res))
   }
 
-  getUserInfo () {
+  getUserInfo (validJwt) {
     return this._request(`${this._url}/users/me`, {
-      headers: this._headers,
+      headers: {
+        ...this._headers,
+        "Authorization": `Bearer ${validJwt}`,
+      },
     })
   }
 
@@ -50,9 +53,12 @@ class Api {
     })
   }
 
-  getCards () {
+  getCards (validJwt) {
     return this._request(`${this._url}/cards`, {
-      headers: this._headers
+      headers: {
+        ...this._headers,
+        "Authorization": `Bearer ${validJwt}`,
+      },
     })
   }
 
@@ -94,7 +100,6 @@ class Api {
 const api = new Api ({
   url: BASE_URL,
   headers: {
-    "Authorization": `Bearer ${localStorage.getItem('jwt')}`,
     "Content-Type": "application/json",
   }
 });

@@ -43,17 +43,34 @@ function App() {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
+  // useEffect(() => {
+  //   if (loggetIn) {
+  //     const validJwt = localStorage.getItem('jwt');
+  //     Promise.all([api.getUserInfo(validJwt), api.getCards(validJwt)])
+  //       .then(( [userInfo, dataCards] )=> {
+  //         setCurrentUser(userInfo);
+  //         setCards(dataCards);
+  //       })
+  //       .catch( err => console.log(err))
+  //     }
+  //   }, [loggetIn]);
   useEffect(() => {
     if (loggetIn) {
       const validJwt = localStorage.getItem('jwt');
-      Promise.all([api.getUserInfo(validJwt), api.getCards(validJwt)])
-        .then(( [userInfo, dataCards] )=> {
-          setCurrentUser(userInfo);
-          setCards(dataCards);
+      api
+        .getUserInfo(validJwt)
+        .then((setCurrentUser))
+        .catch((err) => {
+          console.log(err);
         })
-        .catch( err => console.log(err))
-      }
-    }, [loggetIn]);
+      api
+        .getCards(validJwt)
+        .then((setCards))
+        .catch((err) => {
+          console.log(err);
+        })
+    }
+  },[loggetIn]);
 
   const handleRegistration = (password, email) => {
     return auth.register(password, email)

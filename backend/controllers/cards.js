@@ -100,7 +100,7 @@ async function dislikeCard(req, res, next) {
     }
     return res.status(OK_CODE).send(card);
   } catch (err) {
-    if (err.name === 'CastError' || err.name === 'ValidationError') {
+    if (err instanceof mongoose.Error.CastError) {
       return next(new BadRequestError('Переданы некорректные данные для снятии лайка'));
     }
     return next(err);

@@ -74,7 +74,7 @@ function App() {
       .then( data => {
         if (data.token) {
           setIsResultSucces(true)
-          setMessage('Вы успешно авторизировались');
+          setMessage('Вы успешно авторизовались');
           localStorage.setItem('jwt', data.token);
           setLoggetIn(true);
           navigate('/');

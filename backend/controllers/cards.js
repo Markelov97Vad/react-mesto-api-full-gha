@@ -7,6 +7,7 @@ const Card = require('../models/card');
 const {
   OK_CODE, CREATED_CODE,
 } = require('../utils/codeStatus');
+const { handleError } = require('../utils/handleError');
 
 // запрос всех карточек
 const getCards = (req, res, next) => {
@@ -39,6 +40,7 @@ async function createCard(req, res, next) {
 const deleteCard = (req, res, next) => {
   const { cardId } = req.params;
   const { _id } = req.user;
+
   Card.findById(cardId)
     .then((card) => {
       if (!card) {
@@ -58,54 +60,35 @@ const deleteCard = (req, res, next) => {
     });
 };
 
-// запрос на добавление пользователя в объект likes выбранной карточки
-async function likeCard(req, res, next) {
+async function findCardByIdAndUpdate(model, req, res, options, next) {
   try {
     const { cardId } = req.params;
     const { _id } = req.user;
 
-    const card = await Card.findByIdAndUpdate(
+    const card = await model.findByIdAndUpdate(
       cardId,
-      { $addToSet: { likes: _id } }, // добавить _id в массив, если его там нет
+      { [options]: { likes: _id } },
       { new: true },
     ).populate(['owner', 'likes']);
 
     if (!card) {
-      throw new NotFoundError(`Передан несуществующий id: ${cardId} карточки.`);
+      throw new NotFoundError('Передан несуществующий id карточки.');
     }
-
     return res.status(OK_CODE).send(card);
   } catch (err) {
-    if (err instanceof mongoose.Error.CastError) {
-      return next(new BadRequestError('Переданы некорректные данные для постановки лайка'));
-    }
-    return next(err);
+    return handleError(err, next);
   }
 }
+
+// запрос на добавление пользователя в объект likes выбранной карточки
+const likeCard = (req, res, next) => {
+  findCardByIdAndUpdate(Card, req, res, '$addToSet', next);
+};
 
 // запрос на удаление пользователя из объекта likes выбранной карточки
-async function dislikeCard(req, res, next) {
-  try {
-    const userId = req.user._id;
-    const { cardId } = req.params;
-
-    const card = await Card.findByIdAndUpdate(
-      cardId,
-      { $pull: { likes: userId } }, // убрать _id из массива, если он есть
-      { new: true },
-    ).populate(['owner', 'likes']);
-
-    if (!card) {
-      throw new NotFoundError(`Передан несуществующий id: ${cardId} карточки.`);
-    }
-    return res.status(OK_CODE).send(card);
-  } catch (err) {
-    if (err instanceof mongoose.Error.CastError) {
-      return next(new BadRequestError('Переданы некорректные данные для снятии лайка'));
-    }
-    return next(err);
-  }
-}
+const dislikeCard = (req, res, next) => {
+  findCardByIdAndUpdate(Card, req, res, '$pull', next);
+};
 
 module.exports = {
   getCards,

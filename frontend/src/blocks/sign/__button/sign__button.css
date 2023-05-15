@@ -12,7 +12,7 @@
   font-family: inherit;
   width: 100%;
   padding: 14px 0;
-  margin-bottom: 15px;
+  margin: 216px 0 15px;
   color: black;
 }
 
@@ -24,6 +24,7 @@
   .sign__button {
     font-size: 16px;
     line-height: 19px;
+    margin-top: 170px;
     margin-bottom: 22px;
   }
 }

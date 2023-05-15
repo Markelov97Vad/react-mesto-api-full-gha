@@ -1,20 +1,20 @@
-import React, { useEffect, useRef} from "react";
+import React, { useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
+import useFormStateAndValid from "../hooks/useFormStateAndValid";
 
 function CreateAvatarPopup ({ onUpdateAvatar, ...props}) {
-
-  const avatarRef = useRef();
+  const { values, handleChange,errorMessages, formIsValid, resetFormValues } = useFormStateAndValid({});
   
   function handleSubmit (event) {
     event.preventDefault();
     
     onUpdateAvatar({
-      avatar: avatarRef.current.value
+      avatar: values.avatar
     })
   }
 
   useEffect(() => {
-    avatarRef.current.value = '';
+    resetFormValues();
   },[props.isOpen])
 
   return (
@@ -25,8 +25,8 @@ function CreateAvatarPopup ({ onUpdateAvatar, ...props}) {
       onSubmit={handleSubmit}
       {...props}
     >
-      <input className="form__input" ref={avatarRef} type="url" name="avatar" id="avatar" placeholder="Ссылка на картинку" required/>
-      <span id="avatar-error" className="form__input-error"></span>
+      <input className="form__input" value={values.avatar || ''} onChange={handleChange} type="url" name="avatar" id="avatar" placeholder="Ссылка на картинку" required/>
+      <span id="avatar-error" className={`form__input-error ${(!formIsValid && props.isOpen) ? 'form__input-error_active' : '' }`}>{errorMessages.avatar}</span>
     </PopupWithForm>
   ) 
 }

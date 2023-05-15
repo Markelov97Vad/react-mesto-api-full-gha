@@ -2,3 +2,7 @@
   display: block;
   position: absolute;
 }
+
+.form__input-error_active:only-child {
+  margin-top: -6333px;
+}

@@ -27,6 +27,7 @@ function AddPlacePopup ({ isOpen, onClose, onAddCard, onLoading }) {
       buttonText='Создать'
       onSubmit={handleSubmit}
       onLoading={onLoading}
+      isValid={formIsValid}
     >
       <input className="form__input" type="text" value={values.name || ''} onChange={handleChange} name="name" id="title" placeholder="Название"
       minLength="2" maxLength="30" required/>

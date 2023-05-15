@@ -27,6 +27,7 @@ function EditProfilePopup ({onUpdateUser, isOpen, ...props}) {
       isOpen={isOpen}
       buttonText='Сохранить'
       onSubmit={handleSubmit}
+      isValid={formIsValid}
       {...props}
       >
         <input className="form__input" type="text" name="name" value={values.name || ''} onChange={handleChange} id="name" placeholder="Имя"

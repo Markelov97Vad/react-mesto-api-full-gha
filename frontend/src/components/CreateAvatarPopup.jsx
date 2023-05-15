@@ -23,6 +23,7 @@ function CreateAvatarPopup ({ onUpdateAvatar, ...props}) {
       title='Обновить аватар'
       buttonText='Сохранить'
       onSubmit={handleSubmit}
+      isValid={formIsValid}
       {...props}
     >
       <input className="form__input" value={values.avatar || ''} onChange={handleChange} type="url" name="avatar" id="avatar" placeholder="Ссылка на картинку" required/>

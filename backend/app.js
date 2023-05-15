@@ -30,14 +30,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors);
 // логер запросов
 app.use(requestLogger);
-
-// проверка работы pm2
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
-
 // все роуты
 app.use(router);
 // логгер ошибок

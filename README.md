@@ -64,7 +64,9 @@ Frontend https://mesto.marsello.nomoredomains.monster
 Backend https://api.mesto.marsello.nomoredomains.monster
 
 Фигма(аутентификация) https://www.figma.com/file/5H3gsn5lIGPwzBPby9jAOo/Sprint-14-RU?node-id=0%3A1
+
 Фигма(попапы) https://www.figma.com/file/bjyvbKKJN2naO0ucURl2Z0/JavaScript.-Sprint-5?node-id=0%3A1
+
 Фигма(проект) https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1
 ----
 ### Запуск проекта (frontend):
